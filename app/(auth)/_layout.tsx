@@ -11,7 +11,7 @@ const AuthLayout = () => {
   const isLogged = false;
 
   if (isLogged) {
-    return <Redirect href="/(tabs)" />;
+    return <Redirect href="/home" />;
   }
   //   if (!loading && isLogged) {
   //     return <Redirect href="/home" />;
@@ -36,8 +36,6 @@ const AuthLayout = () => {
 
       {/* Loader shows while loading */}
       {/* <Loader isLoading={loading} /> */}
-
-      <StatusBar backgroundColor="#161622" style="light" />
     </View>
   );
 };

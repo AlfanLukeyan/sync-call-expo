@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
+import { ThemedText } from "./ThemedText";
 import { Colors } from "@/constants/Colors";
 
 interface FormFieldProps {
@@ -34,7 +35,7 @@ const FormField: React.FC<FormFieldProps> = ({
 
   return (
     <View style={[styles.container, otherStyles]}>
-      <Text style={styles.title}>{title}</Text>
+      <ThemedText style={styles.title}>{title}</ThemedText>
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -69,15 +70,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: "#E5E5E5",
-    fontFamily: "Poppins-Medium",
     marginBottom: 8,
   },
   inputContainer: {
     width: "100%",
     height: 64,
     paddingHorizontal: 16,
-    backgroundColor: "#1C1C1E",
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "#333335",
@@ -86,9 +84,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: "white",
     fontSize: 16,
-    fontFamily: "Poppins-SemiBold",
   },
 });
 

@@ -15,7 +15,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import FormField from "@/components/FormField";
 import { Button } from "@/components/Button";
-import { useRouter } from "expo-router";
+import { useRouter, Link } from "expo-router";
 
 const SignUp = () => {
   const colorScheme = useColorScheme() ?? "light";
@@ -28,15 +28,30 @@ const SignUp = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar
-        barStyle={colorScheme === "light" ? "light-content" : "dark-content"}
+        barStyle={colorScheme === "light" ? "dark-content" : "light-content"}
         backgroundColor={
-          colorScheme === "light" ? Colors.light.tint : Colors.dark.tint
+          colorScheme === "light"
+            ? Colors.light.background
+            : Colors.dark.background
         }
       />
-      <ScrollView style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
+      <ScrollView
+        style={{
+          paddingVertical: 20,
+          paddingHorizontal: 20,
+          backgroundColor:
+            colorScheme === "light"
+              ? Colors.light.background
+              : Colors.dark.background,
+        }}
+      >
         <ThemedView style={{ alignItems: "center", marginBottom: 50 }}>
           <Image
-            source={Icons.syncCallLogo}
+            source={
+              colorScheme === "light"
+                ? Icons.light.syncCallLogo
+                : Icons.dark.syncCallLogo
+            }
             style={{ width: 75, height: 75 }}
           />
           <ThemedText type="title" style={{ fontWeight: "normal" }}>
@@ -80,17 +95,19 @@ const SignUp = () => {
             flexDirection: "row",
             justifyContent: "center",
             marginTop: 20,
+            alignItems: "center",
           }}
         >
           <ThemedText>Already have an account? </ThemedText>
-          <TouchableOpacity onPress={() => router.push("/(auth)/sign-in")}>
+          <Link href="/sign-in">
             <ThemedText
               lightColor={Colors.light.tint}
               darkColor={Colors.dark.tint}
+              type="link"
             >
               Sign In
             </ThemedText>
-          </TouchableOpacity>
+          </Link>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>

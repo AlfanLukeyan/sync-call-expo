@@ -11,17 +11,18 @@ import {
 } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Button } from "@/components/Button";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
   const colorScheme = useColorScheme() ?? "light";
+  const router = useRouter();
   const redirectNewMeeting = () => {
-    console.log("New Meeting Just Started!");
+    return router.push("/call");
   };
 
   const usersData = [
@@ -52,7 +53,15 @@ export default function HomeScreen() {
   const secondHalfRoomsData = roomsData.slice(middleIndexRoomsData);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor:
+          colorScheme === "light"
+            ? Colors.light.background
+            : Colors.dark.background,
+      }}
+    >
       <StatusBar
         barStyle={colorScheme === "light" ? "dark-content" : "light-content"}
         backgroundColor={
@@ -86,6 +95,7 @@ export default function HomeScreen() {
           </ThemedView>
           <ThemedText type="title" style={styles.headline}>
             Using Sync Call makes it EASY~
+            <HelloWave />
           </ThemedText>
           <ThemedView
             lightColor={Colors.light.secondary}
@@ -184,7 +194,10 @@ export default function HomeScreen() {
                     </View>
                     <TouchableOpacity
                       style={{
-                        backgroundColor: "black",
+                        backgroundColor:
+                          colorScheme === "light"
+                            ? Colors.light.background
+                            : Colors.dark.background,
                         justifyContent: "center",
                         alignItems: "center",
                         borderRadius: 12,
@@ -192,7 +205,15 @@ export default function HomeScreen() {
                         marginLeft: 50,
                       }}
                     >
-                      <Ionicons name="enter" size={32} color="#CDFE05" />
+                      <Ionicons
+                        name="enter"
+                        size={32}
+                        color={
+                          colorScheme === "light"
+                            ? Colors.light.tint
+                            : Colors.dark.tint
+                        }
+                      />
                     </TouchableOpacity>
                   </View>
                 </ThemedView>
