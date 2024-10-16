@@ -15,7 +15,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import FormField from "@/components/FormField";
 import { Button } from "@/components/Button";
-import { useRouter, Redirect } from "expo-router";
+import { useRouter, Link } from "expo-router";
 
 const SignIn = () => {
   const colorScheme = useColorScheme() ?? "light";
@@ -27,15 +27,30 @@ const SignIn = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar
-        barStyle={colorScheme === "light" ? "light-content" : "dark-content"}
+        barStyle={colorScheme === "light" ? "dark-content" : "light-content"}
         backgroundColor={
-          colorScheme === "light" ? Colors.light.tint : Colors.dark.tint
+          colorScheme === "light"
+            ? Colors.light.background
+            : Colors.dark.background
         }
       />
-      <ScrollView style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
+      <ScrollView
+        style={{
+          paddingVertical: 20,
+          paddingHorizontal: 20,
+          backgroundColor:
+            colorScheme === "light"
+              ? Colors.light.background
+              : Colors.dark.background,
+        }}
+      >
         <ThemedView style={{ alignItems: "center", marginBottom: 50 }}>
           <Image
-            source={Icons.syncCallLogo}
+            source={
+              colorScheme === "light"
+                ? Icons.light.syncCallLogo
+                : Icons.dark.syncCallLogo
+            }
             style={{ width: 75, height: 75 }}
           />
           <ThemedText type="title" style={{ fontWeight: "normal" }}>
@@ -71,7 +86,7 @@ const SignIn = () => {
         </ThemedView>
         <Button
           title="Sign In"
-          onPress={() => <Redirect href="/(tabs)/home" />}
+          onPress={() => router.replace("/home")}
           style={{ marginTop: 20 }}
         />
         <ThemedView
@@ -79,17 +94,19 @@ const SignIn = () => {
             flexDirection: "row",
             justifyContent: "center",
             marginTop: 70,
+            alignItems: "center",
           }}
         >
           <ThemedText>Don’t have an account?</ThemedText>
-          <TouchableOpacity onPress={() => router.push("/(auth)/sign-up")}>
+          <Link href="/sign-up">
             <ThemedText
               lightColor={Colors.light.tint}
               darkColor={Colors.dark.tint}
+              type="link"
             >
               Sign Up
             </ThemedText>
-          </TouchableOpacity>
+          </Link>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>

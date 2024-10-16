@@ -55,7 +55,7 @@ const OnboardingScreen = () => {
   };
 
   const handlePress = () => {
-    router.push("/(auth)/sign-up");
+    router.push("/sign-up");
   };
 
   const indicatorWidth = 20;
