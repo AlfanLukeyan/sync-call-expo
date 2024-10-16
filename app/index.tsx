@@ -7,6 +7,7 @@ import {
   Dimensions,
   StyleSheet,
   StatusBar,
+  useColorScheme,
 } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
@@ -19,6 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const windowWidth = Dimensions.get("window").width;
 
 const OnboardingScreen = () => {
+  const colorScheme = useColorScheme() ?? "light";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scrollX, setScrollX] = useState(0);
 
@@ -53,66 +55,71 @@ const OnboardingScreen = () => {
   };
 
   const handlePress = () => {
-    router.push("/(tabs)");
+    router.push("/(auth)/sign-up");
   };
 
   const indicatorWidth = 20;
   const translateX = (scrollX / windowWidth) * indicatorWidth;
 
   return (
-    // <SafeAreaView style={{ flex: 1 }}>
-    <ThemedView
-      lightColor={Colors.light.tint}
-      darkColor={Colors.dark.tint}
-      style={styles.container}
-    >
-      <StatusBar backgroundColor="#CDFE05" barStyle="dark-content" />
-      <Image
-        source={require("@/assets/images/onboarding.png")}
-        style={styles.imageContainer}
-        resizeMode="contain"
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar
+        barStyle={colorScheme === "light" ? "light-content" : "dark-content"}
+        backgroundColor={
+          colorScheme === "light" ? Colors.light.tint : Colors.dark.tint
+        }
       />
-
       <ThemedView
-        lightColor={Colors.light.background}
-        darkColor={Colors.dark.background}
-        style={styles.contentContainer}
+        lightColor={Colors.light.tint}
+        darkColor={Colors.dark.tint}
+        style={styles.container}
       >
-        <ThemedView style={styles.childContentContainer}>
-          <ScrollView
-            horizontal
-            pagingEnabled
-            onScroll={handleScroll}
-            scrollEventThrottle={16} // Update scroll events more frequently
-            showsHorizontalScrollIndicator={false}
-            style={styles.scrollView}
-          >
-            {data.map((item, index) => (
-              <FeatureItem
-                key={index}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-          </ScrollView>
+        <Image
+          source={require("@/assets/images/onboarding.png")}
+          style={styles.imageContainer}
+          resizeMode="contain"
+        />
 
-          <ThemedView style={styles.buttonContainer}>
-            <Button title="Sign Up" onPress={handlePress} />
-            <ThemedView style={styles.scrollBarContainer}>
-              <ThemedView
-                style={[
-                  styles.scrollIndicator,
-                  { transform: [{ translateX }] },
-                ]}
-                lightColor={Colors.light.tint}
-                darkColor={Colors.dark.tint}
-              />
+        <ThemedView
+          lightColor={Colors.light.background}
+          darkColor={Colors.dark.background}
+          style={styles.contentContainer}
+        >
+          <ThemedView style={styles.childContentContainer}>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              onScroll={handleScroll}
+              scrollEventThrottle={16} // Update scroll events more frequently
+              showsHorizontalScrollIndicator={false}
+              style={styles.scrollView}
+            >
+              {data.map((item, index) => (
+                <FeatureItem
+                  key={index}
+                  title={item.title}
+                  description={item.description}
+                />
+              ))}
+            </ScrollView>
+
+            <ThemedView style={styles.buttonContainer}>
+              <Button title="Sign Up" onPress={handlePress} />
+              <ThemedView style={styles.scrollBarContainer}>
+                <ThemedView
+                  style={[
+                    styles.scrollIndicator,
+                    { transform: [{ translateX }] },
+                  ]}
+                  lightColor={Colors.light.tint}
+                  darkColor={Colors.dark.tint}
+                />
+              </ThemedView>
             </ThemedView>
           </ThemedView>
         </ThemedView>
       </ThemedView>
-    </ThemedView>
-    // </SafeAreaView>
+    </SafeAreaView>
   );
 };
 
