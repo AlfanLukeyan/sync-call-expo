@@ -1,8 +1,15 @@
-import { StyleSheet, useColorScheme, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  useColorScheme,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { ThemedModal } from "@/components/ThemedModal";
+import { Button } from "@/components/Button";
 
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -13,8 +20,60 @@ import { useRouter } from "expo-router";
 export default function Call() {
   const colorScheme = useColorScheme() ?? "light";
   const router = useRouter();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const usersData = [
+    { initial: "R", username: "Rizki Alfan", id: "@5GH6X009" },
+    { initial: "R", username: "Rizki Alfan", id: "@5GH6X009" },
+    { initial: "R", username: "Rizki Alfan", id: "@5GH6X009" },
+    { initial: "R", username: "Rizki Alfan", id: "@5GH6X009" },
+  ];
+
+  const openModalAddPerson = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModalAddPerson = () => {
+    setIsModalVisible(false);
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <ThemedModal
+        visible={isModalVisible}
+        transparent={true}
+        onRequestClose={closeModalAddPerson}
+        animationType="fade"
+        style={{ rowGap: 20 }}
+      >
+        {usersData.map((user, index) => (
+          <View style={{ flexDirection: "row", columnGap: 10 }} key={index}>
+            <View
+              style={{
+                borderRadius: 9999,
+                width: 40,
+                height: 40,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor:
+                  colorScheme === "light"
+                    ? Colors.light.tint
+                    : Colors.dark.tint,
+              }}
+            >
+              <ThemedText
+                lightColor={Colors.light.background}
+                darkColor={Colors.dark.background}
+              >
+                {user.initial}
+              </ThemedText>
+            </View>
+            <View>
+              <ThemedText>{user.username}</ThemedText>
+              <ThemedText type="subtitle">{user.id}</ThemedText>
+            </View>
+          </View>
+        ))}
+      </ThemedModal>
       <ThemedView
         lightColor={Colors.light.background}
         darkColor={Colors.dark.background}
@@ -31,7 +90,7 @@ export default function Call() {
             />
           </TouchableOpacity>
           <ThemedText type="default">End-to-end encryted</ThemedText>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={openModalAddPerson}>
             <Ionicons
               name="person-add"
               size={24}

@@ -21,8 +21,13 @@ import { useRouter } from "expo-router";
 export default function HomeScreen() {
   const colorScheme = useColorScheme() ?? "light";
   const router = useRouter();
-  const redirectNewMeeting = () => {
-    return router.push("/call");
+  const redirectNewMeeting = (userData) => {
+    return router.push({
+      pathname: "/call",
+      params: {
+        userData: JSON.stringify(userData),
+      },
+    });
   };
 
   const usersData = [
@@ -108,7 +113,7 @@ export default function HomeScreen() {
             </ThemedText>
             <Button
               title="New meeting"
-              onPress={redirectNewMeeting}
+              onPress={() => console.log("This Button New Meeting")}
               style={{ marginTop: 20 }}
             />
           </ThemedView>
@@ -126,7 +131,10 @@ export default function HomeScreen() {
             >
               {usersData.map((user, index) => (
                 <View key={index}>
-                  <Button title={user.initial} onPress={redirectNewMeeting} />
+                  <Button
+                    title={user.initial}
+                    onPress={() => redirectNewMeeting(usersData)}
+                  />
                   <ThemedText style={{ textAlign: "center", marginTop: 5 }}>
                     {user.username}
                   </ThemedText>
